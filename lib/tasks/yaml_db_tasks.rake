@@ -17,8 +17,10 @@ namespace :db do
     desc "Dump contents of database to db/data.extension (defaults to yaml)"
     task :dump => :environment do
       format_class = ENV['class'] || "YamlDb::Helper"
+      output_base = ENV["output_base"]
       helper = format_class.constantize
-      SerializationHelper::Base.new(helper).dump db_dump_data_file helper.extension
+      base = SerializationHelper::get_base(output_base)
+      base.new(helper).dump db_dump_data_file helper.extension
     end
 
     desc "Dump contents of database to curr_dir_name/tablename.extension (defaults to yaml)"

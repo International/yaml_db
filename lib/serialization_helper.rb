@@ -1,5 +1,13 @@
 module SerializationHelper
 
+  def self.get_base(other_base=nil)
+    if other_base
+      other_base.constantize
+    else
+      self::Base
+    end
+  end
+
   class Base
     attr_reader :extension
 
@@ -51,6 +59,14 @@ module SerializationHelper
     end
   end
   
+  class StdoutBase < Base
+    def dump(filename)
+      disable_logger
+      @dumper.dump(STDOUT)
+      reenable_logger
+    end
+  end
+
   class Load
     def self.load(io, truncate = true)
       ActiveRecord::Base.connection.transaction do

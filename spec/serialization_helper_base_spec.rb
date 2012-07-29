@@ -38,6 +38,16 @@ describe SerializationHelper::Base do
 
     end
 
+    context "selecting base to use" do
+      it "should use SerializationHelper::Base by default" do
+        SerializationHelper::get_base.should == SerializationHelper::Base
+      end
+
+      it "should be possible to use base specified as parameter" do
+        SerializationHelper::get_base("SerializationHelper::StdoutBase").should == SerializationHelper::StdoutBase
+      end
+    end
+
     context "for multi-file loads" do
 
       before do
